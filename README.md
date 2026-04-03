@@ -1,3 +1,10 @@
+# Cyber Attack Excercise --> Class: Ai and national security
+## Learning objective
+
+users to familiarize themselves with cyberattack related terms
+
+## Brief Project Description
+
 Before users can press "LOCK ATTACK" and "RESOLVE TURN," a pop-up window appears to ask the user to confirm that they understand the move they are selecting. In the pop-up window, list 3 multiple-choice answers, 2 incorrect and 1 correct, defining what the action does.
 
 Attack Panel Options
@@ -13,6 +20,114 @@ Defense Panel Responses
 - Isolate cuts a compromised or at-risk node off from the rest of the network. This is the primary counter to lateral movement — once a node is isolated, the attacker can't pivot through it. The tradeoff is that the isolated node can no longer perform its function.
 - Monitor places a node under surveillance, alerting the defender when an attack is attempted. It's a counter to brute force (detecting repeated attempts) and can reveal the attacker's strategy, but it doesn't prevent damage on its own.
 - Restore brings a compromised node back to a clean state, undoing the effects of a successful attack. It should take time or cost resources to balance the game, since an instant restore would eliminate much of the attacker's progress.
+
+
+# AUSTIN TO ADD SHI
+# Cyber Attack & Defense — Question Bank
+
+## Attack Moves
+
+- so when user selects on an action, a popup should come up and ask the associated multiple choice question. If the user gets the question wrong, it should just say "Sorry try again" and gray out the previously selected answer choice". repeat this until user selects correct answer --> user should then have the option to quit the text box...
+
+### Exploit
+
+**Q: What does the Exploit move do?**
+
+- A) Forces the defender to skip their next turn
+- B) Targets a known vulnerability in a specific node to damage it ✅
+- C) Spreads damage across all nodes connected to the target
+
+---
+
+### Phishing
+
+**Q: Which type of node is Phishing most effective against?**
+
+- A) Database servers protected by weak encryption
+- B) Firewalls with misconfigured rules
+- C) Human-operated nodes like Admins and Mail ✅
+
+---
+
+### Brute Force
+
+**Q: What makes Brute Force easy for the defender to detect?**
+
+- A) It leaves a permanent damage marker on the attacked node
+- B) It generates repeated login attempts that Monitor can catch ✅
+- C) The attacker must declare the target out loud before using it
+
+---
+
+### Lateral Move
+
+**Q: What condition must be true before the attacker can use Lateral Move?**
+
+- A) The defender must have already used Isolate that round
+- B) The attacker must already control an adjacent compromised node ✅
+- C) The attacker must have used Zero Day on their previous turn
+
+---
+
+### Zero Day
+
+**Q: Why can most defenses not stop a Zero Day attack?**
+
+- A) Zero Day automatically targets the highest-value node on the board
+- B) It exploits an unknown vulnerability that Patch and Harden can't anticipate ✅
+- C) It forces the defender to discard all cards in their hand
+
+---
+
+## Defense Moves
+
+### Patch
+
+**Q: Which attack does Patch most directly counter?**
+
+- A) Phishing, by training users to recognize suspicious messages
+- B) Exploit, by closing the known vulnerability being targeted ✅
+- C) Lateral Move, by sealing connections between nodes
+
+---
+
+### Harden
+
+**Q: How is Harden different from Patch?**
+
+- A) Harden can only be applied to the Gateway and Firewall nodes
+- B) Harden tightens configuration and raises attack difficulty without fully blocking attacks ✅
+- C) Harden permanently disables the node to make it an invalid target
+
+---
+
+### Isolate
+
+**Q: What is the main reason to Isolate a node?**
+
+- A) To restore it to a clean state after it's been compromised
+- B) To cut it off from the network and prevent Lateral Move from passing through it ✅
+- C) To scan neighboring nodes for incoming threats
+
+---
+
+### Monitor
+
+**Q: What does Monitor do when it detects an attack?**
+
+- A) Automatically blocks the attack and prevents all damage
+- B) Alerts the defender so they can respond — but doesn't prevent damage on its own ✅
+- C) Deals damage back to the attacker equal to the attack's strength
+
+---
+
+### Restore
+
+**Q: What happens if the attacker compromises the Backup node before the defender uses Restore?**
+
+- A) Nothing — Restore always succeeds regardless of the Backup's status
+- B) The defender permanently loses access to the Restore move
+- C) Restores either fail or produce a corrupted result, weakening the defender's recovery ✅
 
 # CyberWarGame Development README
 
