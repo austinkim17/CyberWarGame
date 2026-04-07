@@ -49,6 +49,132 @@ const DEFENSE_COPY = {
   RESTORE: "Recover a compromised or vulnerable node to secure.",
 };
 
+/* ─── QUESTION BANK ─── */
+const QUIZ_BANK = {
+  EXPLOIT: {
+    question: "What does the Exploit move do?",
+    answers: [
+      { text: "Forces the defender to skip their next turn", correct: false },
+      { text: "Targets a known vulnerability in a specific node to damage it", correct: true },
+      { text: "Spreads damage across all nodes connected to the target", correct: false },
+    ],
+  },
+  PHISHING: {
+    question: "Which type of node is Phishing most effective against?",
+    answers: [
+      { text: "Database servers protected by weak encryption", correct: false },
+      { text: "Firewalls with misconfigured rules", correct: false },
+      { text: "Human-operated nodes like Admins and Mail", correct: true },
+    ],
+  },
+  BRUTEFORCE: {
+    question: "What makes Brute Force easy for the defender to detect?",
+    answers: [
+      { text: "It leaves a permanent damage marker on the attacked node", correct: false },
+      { text: "It generates repeated login attempts that Monitor can catch", correct: true },
+      { text: "The attacker must declare the target out loud before using it", correct: false },
+    ],
+  },
+  LATERAL_MOVE: {
+    question: "What condition must be true before the attacker can use Lateral Move?",
+    answers: [
+      { text: "The defender must have already used Isolate that round", correct: false },
+      { text: "The attacker must already control an adjacent compromised node", correct: true },
+      { text: "The attacker must have used Zero Day on their previous turn", correct: false },
+    ],
+  },
+  ZERO_DAY: {
+    question: "Why can most defenses not stop a Zero Day attack?",
+    answers: [
+      { text: "Zero Day automatically targets the highest-value node on the board", correct: false },
+      { text: "It exploits an unknown vulnerability that Patch and Harden can't anticipate", correct: true },
+      { text: "It forces the defender to discard all cards in their hand", correct: false },
+    ],
+  },
+  PATCH: {
+    question: "Which attack does Patch most directly counter?",
+    answers: [
+      { text: "Phishing, by training users to recognize suspicious messages", correct: false },
+      { text: "Exploit, by closing the known vulnerability being targeted", correct: true },
+      { text: "Lateral Move, by sealing connections between nodes", correct: false },
+    ],
+  },
+  HARDEN: {
+    question: "How is Harden different from Patch?",
+    answers: [
+      { text: "Harden can only be applied to the Gateway and Firewall nodes", correct: false },
+      { text: "Harden tightens configuration and raises attack difficulty without fully blocking attacks", correct: true },
+      { text: "Harden permanently disables the node to make it an invalid target", correct: false },
+    ],
+  },
+  ISOLATE: {
+    question: "What is the main reason to Isolate a node?",
+    answers: [
+      { text: "To restore it to a clean state after it's been compromised", correct: false },
+      { text: "To cut it off from the network and prevent Lateral Move from passing through it", correct: true },
+      { text: "To scan neighboring nodes for incoming threats", correct: false },
+    ],
+  },
+  MONITOR: {
+    question: "What does Monitor do when it detects an attack?",
+    answers: [
+      { text: "Automatically blocks the attack and prevents all damage", correct: false },
+      { text: "Alerts the defender so they can respond — but doesn't prevent damage on its own", correct: true },
+      { text: "Deals damage back to the attacker equal to the attack's strength", correct: false },
+    ],
+  },
+  RESTORE: {
+    question: "What happens if the attacker compromises the Backup node before the defender uses Restore?",
+    answers: [
+      { text: "Nothing — Restore always succeeds regardless of the Backup's status", correct: false },
+      { text: "The defender permanently loses access to the Restore move", correct: false },
+      { text: "Restores either fail or produce a corrupted result, weakening the defender's recovery", correct: true },
+    ],
+  },
+};
+
+/* ─── DEBRIEF COPY ─── */
+const DEBRIEF_DATA = {
+  EXPLOIT: {
+    atkDesc: "Exploit targets known software vulnerabilities or misconfigurations. In real-world attacks, this is one of the most common initial access techniques — attackers scan for unpatched services and use publicly known exploits to gain a foothold.",
+    counter: "Patch is the primary counter. Keeping systems up to date closes the exact vulnerabilities Exploit relies on. Harden also helps by reducing the attack surface through tighter configurations.",
+  },
+  PHISHING: {
+    atkDesc: "Phishing is a social engineering attack that targets people, not systems. Even networks with perfect patch management are vulnerable because phishing tricks users into handing over credentials or clicking malicious links.",
+    counter: "Monitor is the key defense — security awareness training and email filtering catch phishing attempts before they succeed. Isolate can limit the blast radius if phishing does compromise a node.",
+  },
+  BRUTEFORCE: {
+    atkDesc: "Brute Force works by hammering login endpoints with repeated credential guesses. It is noisy and slow compared to other techniques, but it reliably works against systems with weak passwords or no account lockout policies.",
+    counter: "Monitor detects the flood of failed login attempts. Harden raises the bar with stronger authentication requirements like MFA, rate limiting, and complex password policies.",
+  },
+  LATERAL_MOVE: {
+    atkDesc: "Lateral Movement is how attackers expand from a single compromised machine deeper into the network. Techniques include pass-the-hash, RDP hopping, and abusing trust relationships between systems.",
+    counter: "Isolate is the strongest counter — network segmentation physically prevents the attacker from pivoting through a node. Without isolation, a single compromised host can become a launching pad for the entire network.",
+  },
+  ZERO_DAY: {
+    atkDesc: "A Zero Day exploits an unknown vulnerability that has no existing patch. These are the most dangerous attacks because standard defenses like patching and hardening cannot anticipate them. In practice, zero-days are rare and expensive.",
+    counter: "No single defense reliably stops a zero-day. Defense-in-depth is key — layering Monitor for detection, Isolate to limit spread, and Restore for rapid recovery after the inevitable breach.",
+  },
+};
+
+const DEFENSE_DEBRIEF = {
+  PATCH: "Patch represents applying software updates and fixing known vulnerabilities. It's the most fundamental defensive action — the majority of successful cyberattacks exploit vulnerabilities that already have patches available.",
+  HARDEN: "Hardening goes beyond patching by removing unnecessary services, tightening access controls, and enforcing least-privilege. It reduces the overall attack surface even against threats that patches don't cover.",
+  ISOLATE: "Isolation (network segmentation) is one of the most powerful defensive tools. By cutting network paths, you contain breaches to a small segment instead of losing the entire network.",
+  MONITOR: "Monitoring provides visibility — you can't defend what you can't see. SIEM systems, intrusion detection, and log analysis help defenders spot attacks in progress and respond before damage spreads.",
+  RESTORE: "Restore represents incident recovery — rebuilding from clean backups after a compromise. It's essential for resilience, but only works if backups themselves are secure and untampered.",
+};
+
+/* ─── SHUFFLE UTILITY ─── */
+function shuffleArray(arr) {
+  const shuffled = arr.map((item, originalIndex) => ({ ...item, originalIndex }));
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 function initNodes() {
   return NODES.map((n) => ({ ...n, status: "secure" }));
 }
@@ -134,41 +260,41 @@ function applyTurn(nodes, attack, defense) {
   if (defense.action === "ISOLATE" && defense.target === attack.target) {
     blocked = true;
     defenderPoint += 1;
-    defEvents.push(`✓ BLOCKED: ${atkNode.label} was isolated in time.`);
+    defEvents.push(`BLOCKED: ${atkNode.label} was isolated in time.`);
   }
 
   if (!blocked && defense.action === "MONITOR" && attack.method === "PHISHING" && defense.target === attack.target) {
     blocked = true;
     defenderPoint += 1;
-    defEvents.push(`✓ DETECTED: phishing against ${atkNode.label} was caught and contained.`);
+    defEvents.push(`DETECTED: phishing against ${atkNode.label} was caught and contained.`);
   }
 
   if (!blocked) {
     if (atkNode.status === "secure") {
       atkNode.status = "vulnerable";
-      atkEvents.push(`⚠ DEGRADED: ${atkNode.label} → VULNERABLE`);
+      atkEvents.push(`DEGRADED: ${atkNode.label} is now VULNERABLE`);
     } else if (atkNode.status === "vulnerable") {
       atkNode.status = "compromised";
       attackerPoint += 1;
-      atkEvents.push(`✓ COMPROMISED: ${atkNode.label}`);
+      atkEvents.push(`COMPROMISED: ${atkNode.label}`);
     }
   }
 
   if (defense.action === "PATCH" || defense.action === "RESTORE") {
     if (defNode.status !== "secure") {
       defNode.status = "secure";
-      defEvents.push(`✓ RESTORED: ${defNode.label}`);
+      defEvents.push(`RESTORED: ${defNode.label}`);
     } else {
-      defEvents.push(`• ${defNode.label} was already secure.`);
+      defEvents.push(`${defNode.label} was already secure.`);
     }
   }
 
   if (defense.action === "HARDEN") {
     if (defNode.status === "secure") {
-      defEvents.push(`✓ HARDENED: ${defNode.label} remains difficult to breach.`);
+      defEvents.push(`HARDENED: ${defNode.label} remains difficult to breach.`);
     } else {
       defNode.status = "secure";
-      defEvents.push(`✓ HARDENED: ${defNode.label} pushed back to SECURE.`);
+      defEvents.push(`HARDENED: ${defNode.label} pushed back to SECURE.`);
     }
   }
 
@@ -185,6 +311,259 @@ function applyTurn(nodes, attack, defense) {
   };
 }
 
+/* ─── QUIZ MODAL COMPONENT ─── */
+function QuizModal({ actionKey, team, onPass, onCancel }) {
+  const quiz = QUIZ_BANK[actionKey];
+  const [shuffledAnswers] = useState(() => shuffleArray(quiz?.answers || []));
+  const [eliminated, setEliminated] = useState(new Set());
+  const [correct, setCorrect] = useState(false);
+  const [shakeIdx, setShakeIdx] = useState(null);
+
+  if (!quiz) return null;
+
+  const borderColor = team === "red" ? "#ff1744" : "#00e676";
+  const bgColor = team === "red" ? "#1a0b10" : "#091b12";
+  const accentColor = team === "red" ? "#ff5252" : "#69f0ae";
+  const teamLabel = team === "red" ? "RED TEAM" : "BLUE TEAM";
+
+  const handleAnswer = (idx) => {
+    if (correct || eliminated.has(idx)) return;
+    if (shuffledAnswers[idx].correct) {
+      setCorrect(true);
+    } else {
+      setEliminated((prev) => new Set([...prev, idx]));
+      setShakeIdx(idx);
+      setTimeout(() => setShakeIdx(null), 500);
+    }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(2, 6, 10, 0.85)", backdropFilter: "blur(4px)" }}>
+      <div style={{ width: "460px", background: "#080e14", border: `1px solid ${borderColor}40`, borderRadius: "6px", overflow: "hidden", boxShadow: `0 0 40px ${borderColor}15` }}>
+        {/* Header */}
+        <div style={{ padding: "14px 18px", background: bgColor, borderBottom: `1px solid ${borderColor}30`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <span style={{ fontSize: "9px", color: borderColor, letterSpacing: "2px", opacity: 0.7 }}>{teamLabel} KNOWLEDGE CHECK</span>
+            <div style={{ fontFamily: "'Orbitron', monospace", fontSize: "13px", color: "#fff", marginTop: "4px", letterSpacing: "1px" }}>{actionKey.replace("_", " ")}</div>
+          </div>
+          <div style={{ width: "36px", height: "36px", borderRadius: "50%", border: `2px solid ${borderColor}50`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", color: correct ? "#00e676" : borderColor }}>
+            {correct ? "\u2713" : "?"}
+          </div>
+        </div>
+
+        {/* Question */}
+        <div style={{ padding: "18px" }}>
+          <div style={{ fontSize: "12px", color: "#c0d8e8", marginBottom: "16px", lineHeight: "1.6" }}>{quiz.question}</div>
+
+          {/* Answer choices — shuffled order */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {shuffledAnswers.map((ans, idx) => {
+              const isEliminated = eliminated.has(idx);
+              const isCorrectAnswer = ans.correct && correct;
+              const isShaking = shakeIdx === idx;
+
+              let answerBg = "#0a1620";
+              let answerBorder = "#1a3a50";
+              let answerColor = "#8ab4c8";
+              let cursor = "pointer";
+
+              if (isEliminated) {
+                answerBg = "#0a0a0a";
+                answerBorder = "#1a1a1a";
+                answerColor = "#333";
+                cursor = "not-allowed";
+              } else if (isCorrectAnswer) {
+                answerBg = "#0a1a10";
+                answerBorder = "#00e676";
+                answerColor = "#00e676";
+                cursor = "default";
+              }
+
+              return (
+                <button
+                  key={idx}
+                  onClick={() => handleAnswer(idx)}
+                  disabled={isEliminated || correct}
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    padding: "12px 14px",
+                    background: answerBg,
+                    border: `1px solid ${answerBorder}`,
+                    borderRadius: "4px",
+                    color: answerColor,
+                    fontFamily: "'Share Tech Mono', monospace",
+                    fontSize: "11px",
+                    lineHeight: "1.5",
+                    cursor,
+                    transition: "all 0.2s",
+                    position: "relative",
+                    animation: isShaking ? "quizShake 0.4s ease-out" : undefined,
+                  }}
+                >
+                  <span style={{ color: isEliminated ? "#222" : isCorrectAnswer ? "#00e676" : "#4a7a90", marginRight: "8px", fontWeight: "bold" }}>
+                    {String.fromCharCode(65 + idx)}.
+                  </span>
+                  {ans.text}
+                  {isEliminated && (
+                    <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", fontSize: "10px", color: "#ff1744", letterSpacing: "1px" }}>INCORRECT</span>
+                  )}
+                  {isCorrectAnswer && (
+                    <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", fontSize: "10px", color: "#00e676", letterSpacing: "1px" }}>CORRECT</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Wrong answer feedback */}
+          {eliminated.size > 0 && !correct && (
+            <div style={{ marginTop: "12px", fontSize: "10px", color: "#ff5252", textAlign: "center", letterSpacing: "1px" }}>
+              Wrong answer — try again.
+            </div>
+          )}
+
+          {/* Correct answer feedback */}
+          {correct && (
+            <div style={{ marginTop: "14px", padding: "12px", background: "#071510", border: "1px solid #00e67630", borderRadius: "4px" }}>
+              <div style={{ fontSize: "10px", color: "#00e676", letterSpacing: "1px", marginBottom: "6px" }}>CORRECT — KNOWLEDGE VERIFIED</div>
+              <div style={{ fontSize: "10px", color: "#69f0ae", lineHeight: "1.6" }}>
+                You understand what {actionKey.replace("_", " ")} does. Proceed with your move.
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer buttons */}
+        <div style={{ padding: "0 18px 16px", display: "flex", gap: "8px" }}>
+          <button
+            onClick={onCancel}
+            style={{ flex: 1, padding: "10px", background: "#07111a", border: "1px solid #0c2e45", color: "#2a5a70", fontFamily: "'Share Tech Mono', monospace", fontSize: "10px", letterSpacing: "1px", cursor: "pointer", borderRadius: "3px" }}
+          >
+            CANCEL
+          </button>
+          <button
+            onClick={onPass}
+            disabled={!correct}
+            style={{
+              flex: 2,
+              padding: "10px",
+              background: correct ? bgColor : "#07111a",
+              border: `1px solid ${correct ? borderColor : "#0c2e45"}`,
+              color: correct ? accentColor : "#2a3a45",
+              fontFamily: "'Share Tech Mono', monospace",
+              fontSize: "10px",
+              letterSpacing: "1px",
+              cursor: correct ? "pointer" : "not-allowed",
+              borderRadius: "3px",
+              fontWeight: "bold",
+            }}
+          >
+            {correct ? "CONFIRM MOVE" : "ANSWER CORRECTLY TO PROCEED"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── DEBRIEF PANEL COMPONENT ─── */
+function DebriefPanel({ attackMethod, defenseAction, resolution, attackTarget, defenseTarget, onDismiss }) {
+  const atkInfo = DEBRIEF_DATA[attackMethod] || {};
+  const defInfo = DEFENSE_DEBRIEF[defenseAction] || "";
+  const atkLabel = NODES.find((n) => n.id === attackTarget)?.label || attackTarget;
+  const defLabel = NODES.find((n) => n.id === defenseTarget)?.label || defenseTarget;
+
+  let outcomeColor = "#ffb300";
+  let outcomeText = "ATTACK DEGRADED TARGET";
+  let outcomeIcon = "\u26A0";
+  if (resolution.blocked) {
+    outcomeColor = "#00e676";
+    outcomeText = "ATTACK BLOCKED BY DEFENSE";
+    outcomeIcon = "\u2713";
+  } else if (resolution.attackerPoint > 0) {
+    outcomeColor = "#ff1744";
+    outcomeText = "NODE FULLY COMPROMISED";
+    outcomeIcon = "\u2716";
+  }
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(2, 6, 10, 0.85)", backdropFilter: "blur(4px)" }}>
+      <div style={{ width: "540px", maxHeight: "80vh", background: "#080e14", border: "1px solid #1a3a50", borderRadius: "6px", overflow: "hidden", boxShadow: "0 0 40px rgba(0,180,255,0.08)", display: "flex", flexDirection: "column" }}>
+        {/* Header */}
+        <div style={{ padding: "14px 18px", background: "#04111a", borderBottom: "1px solid #0c2e45", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <span style={{ fontSize: "9px", color: "#00d4ff", letterSpacing: "2px" }}>TURN DEBRIEF</span>
+            <div style={{ fontFamily: "'Orbitron', monospace", fontSize: "12px", color: "#fff", marginTop: "4px", letterSpacing: "1px" }}>INTELLIGENCE REPORT</div>
+          </div>
+          <div style={{ padding: "4px 12px", border: `1px solid ${outcomeColor}`, borderRadius: "3px", color: outcomeColor, fontSize: "10px", letterSpacing: "1px" }}>
+            {outcomeIcon} {outcomeText}
+          </div>
+        </div>
+
+        {/* Scrollable body */}
+        <div style={{ padding: "18px", overflowY: "auto", flex: 1 }}>
+          {/* Outcome summary */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
+            <div style={{ padding: "10px", background: "#1a0b10", border: "1px solid #3a151f", borderRadius: "4px" }}>
+              <div style={{ fontSize: "9px", color: "#ff5252", letterSpacing: "1px", marginBottom: "4px" }}>RED TEAM USED</div>
+              <div style={{ fontSize: "12px", color: "#ff7070", fontWeight: "bold" }}>{attackMethod.replace("_", " ")}</div>
+              <div style={{ fontSize: "10px", color: "#804040", marginTop: "2px" }}>Target: {atkLabel}</div>
+            </div>
+            <div style={{ padding: "10px", background: "#091b12", border: "1px solid #163424", borderRadius: "4px" }}>
+              <div style={{ fontSize: "9px", color: "#00e676", letterSpacing: "1px", marginBottom: "4px" }}>BLUE TEAM USED</div>
+              <div style={{ fontSize: "12px", color: "#69f0ae", fontWeight: "bold" }}>{defenseAction}</div>
+              <div style={{ fontSize: "10px", color: "#406040", marginTop: "2px" }}>Target: {defLabel}</div>
+            </div>
+          </div>
+
+          {/* Event log */}
+          {(resolution.atkEvents.length > 0 || resolution.defEvents.length > 0) && (
+            <div style={{ marginBottom: "16px", padding: "10px", background: "#060c12", border: "1px solid #0c2e4540", borderRadius: "4px" }}>
+              <div style={{ fontSize: "9px", color: "#4a7a90", letterSpacing: "1px", marginBottom: "6px" }}>EVENTS THIS TURN</div>
+              {resolution.atkEvents.map((e, i) => (
+                <div key={`a${i}`} style={{ fontSize: "10px", color: "#ff7070", lineHeight: "1.6", padding: "2px 0" }}>{e}</div>
+              ))}
+              {resolution.defEvents.map((e, i) => (
+                <div key={`d${i}`} style={{ fontSize: "10px", color: "#69f0ae", lineHeight: "1.6", padding: "2px 0" }}>{e}</div>
+              ))}
+            </div>
+          )}
+
+          {/* Educational content — Attack */}
+          <div style={{ marginBottom: "14px" }}>
+            <div style={{ fontSize: "10px", color: "#ff5252", letterSpacing: "1px", marginBottom: "6px", borderBottom: "1px solid #ff174420", paddingBottom: "4px" }}>ABOUT: {attackMethod.replace("_", " ")}</div>
+            <div style={{ fontSize: "11px", color: "#c0a0a0", lineHeight: "1.7" }}>{atkInfo.atkDesc}</div>
+          </div>
+
+          {/* Educational content — Defense */}
+          <div style={{ marginBottom: "14px" }}>
+            <div style={{ fontSize: "10px", color: "#00e676", letterSpacing: "1px", marginBottom: "6px", borderBottom: "1px solid #00e67620", paddingBottom: "4px" }}>ABOUT: {defenseAction}</div>
+            <div style={{ fontSize: "11px", color: "#a0c0a0", lineHeight: "1.7" }}>{defInfo}</div>
+          </div>
+
+          {/* Matchup insight */}
+          <div style={{ padding: "10px 12px", background: "#0a141e", border: "1px solid #0c2e45", borderRadius: "4px" }}>
+            <div style={{ fontSize: "10px", color: "#00d4ff", letterSpacing: "1px", marginBottom: "6px" }}>MATCHUP INSIGHT</div>
+            <div style={{ fontSize: "11px", color: "#8ab4c8", lineHeight: "1.7" }}>{atkInfo.counter}</div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div style={{ padding: "12px 18px", borderTop: "1px solid #0c2e45", background: "#04111a" }}>
+          <button
+            onClick={onDismiss}
+            style={{ width: "100%", padding: "11px", background: "#081820", border: "1px solid #00d4ff40", color: "#00d4ff", fontFamily: "'Share Tech Mono', monospace", fontSize: "11px", letterSpacing: "2px", cursor: "pointer", borderRadius: "3px" }}
+          >
+            CONTINUE TO NEXT TURN
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── CSS ─── */
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700;900&display=swap');
   @keyframes atkPulse { 0% { r: 30; opacity: 0.9; } 100% { r: 62; opacity: 0; } }
@@ -193,6 +572,7 @@ const CSS = `
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
   @keyframes winPulse { 0%,100% { box-shadow: 0 0 8px currentColor; } 50% { box-shadow: 0 0 24px currentColor; } }
+  @keyframes quizShake { 0% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } 100% { transform: translateX(0); } }
   .pulse-atk { animation: atkPulse 0.75s ease-out infinite; }
   .pulse-def { animation: defPulse 0.6s ease-out infinite; }
   .pulse-blk { animation: defPulse 0.5s ease-out 2; }
@@ -204,6 +584,7 @@ const CSS = `
   ::-webkit-scrollbar-thumb { background: #0e3050; border-radius: 2px; }
 `;
 
+/* ─── MAIN COMPONENT ─── */
 export default function CyberWarGame() {
   const [nodes, setNodes] = useState(initNodes);
   const [turn, setTurn] = useState(1);
@@ -219,6 +600,12 @@ export default function CyberWarGame() {
   const [attackTarget, setAttackTarget] = useState(null);
   const [defenseAction, setDefenseAction] = useState("PATCH");
   const [defenseTarget, setDefenseTarget] = useState(null);
+
+  // Quiz modal state
+  const [quizOpen, setQuizOpen] = useState(null);
+
+  // Debrief panel state
+  const [debriefData, setDebriefData] = useState(null);
 
   const atkRef = useRef(null);
   const defRef = useRef(null);
@@ -252,26 +639,51 @@ export default function CyberWarGame() {
   const aLog = (msg) => setAtkLog((l) => [{ id: Date.now() + Math.random(), msg }, ...l].slice(0, 50));
   const dLog = (msg) => setDefLog((l) => [{ id: Date.now() + Math.random(), msg }, ...l].slice(0, 50));
 
-  const previewAttack = () => {
+  /* ─── ATTACK: open quiz before locking ─── */
+  const handleLockAttack = () => {
+    if (!attackTarget || step !== "attack" || result) return;
+    setQuizOpen({
+      actionKey: attackMethod,
+      team: "red",
+      callback: () => {
+        setQuizOpen(null);
+        doPreviewAttack();
+      },
+    });
+  };
+
+  const doPreviewAttack = () => {
     if (!attackTarget) return;
     const node = NODES.find((n) => n.id === attackTarget);
     const edge = findEdgeForTarget(nodes, attackTarget);
     if (edge) setHotEdge({ from: edge[0], to: edge[1], type: "atk" });
     setPulse({ nodeId: attackTarget, type: "atk" });
     setSelectedAttack({ target: attackTarget, method: attackMethod });
-    aLog(`━━━━ TURN ${turn}/${MAX_TURNS} ━━━━`);
+    aLog(`\u2501\u2501\u2501\u2501 TURN ${turn}/${MAX_TURNS} \u2501\u2501\u2501\u2501`);
     aLog(`> TARGET: ${node?.label} via ${attackMethod}`);
     aLog(`> ${getAttackNarrative(node?.label || attackTarget, attackMethod)}`);
     setStep("defense");
   };
 
-  const resolveTurn = async () => {
+  /* ─── DEFENSE: open quiz before resolving ─── */
+  const handleResolveTurn = () => {
+    if (!selectedAttack || !defenseTarget || result || step !== "defense") return;
+    setQuizOpen({
+      actionKey: defenseAction,
+      team: "blue",
+      callback: () => {
+        setQuizOpen(null);
+        doResolveTurn();
+      },
+    });
+  };
+
+  const doResolveTurn = async () => {
     if (!selectedAttack || !defenseTarget || result) return;
 
-    const attackNode = NODES.find((n) => n.id === selectedAttack.target);
     const defendNode = NODES.find((n) => n.id === defenseTarget);
 
-    dLog(`━━━━ TURN ${turn}/${MAX_TURNS} ━━━━`);
+    dLog(`\u2501\u2501\u2501\u2501 TURN ${turn}/${MAX_TURNS} \u2501\u2501\u2501\u2501`);
     dLog(`> RESPONSE: ${defendNode?.label} [${defenseAction}]`);
     dLog(`> ${getDefenseNarrative(defendNode?.label || defenseTarget, defenseAction)}`);
 
@@ -289,15 +701,32 @@ export default function CyberWarGame() {
     setPulse(null);
     setHotEdge(null);
 
-    if (resolution.critDown >= 2) {
+    // Show debrief panel BEFORE advancing the turn
+    setDebriefData({
+      attackMethod: selectedAttack.method,
+      defenseAction: defenseAction,
+      resolution: resolution,
+      attackTarget: selectedAttack.target,
+      defenseTarget: defenseTarget,
+      critDown: resolution.critDown,
+      currentTurn: turn,
+    });
+  };
+
+  /* ─── Debrief dismiss: now advance turn / check win ─── */
+  const handleDebriefDismiss = () => {
+    const data = debriefData;
+    setDebriefData(null);
+
+    if (data.critDown >= 2) {
       setResult("attacker");
-      aLog("██ CRITICAL BREACH — NETWORK OWNED ██");
+      aLog("\u2588\u2588 CRITICAL BREACH \u2014 NETWORK OWNED \u2588\u2588");
       return;
     }
 
-    if (turn >= MAX_TURNS) {
+    if (data.currentTurn >= MAX_TURNS) {
       setResult("defender");
-      dLog("██ NETWORK SECURED — DEFENDER WINS ██");
+      dLog("\u2588\u2588 NETWORK SECURED \u2014 DEFENDER WINS \u2588\u2588");
       return;
     }
 
@@ -321,6 +750,8 @@ export default function CyberWarGame() {
     setAttackTarget(null);
     setDefenseAction("PATCH");
     setDefenseTarget(null);
+    setQuizOpen(null);
+    setDebriefData(null);
   };
 
   const barColor = attackSurface > 60 ? "#ff1744" : attackSurface > 30 ? "#ffb300" : "#00e676";
@@ -330,12 +761,36 @@ export default function CyberWarGame() {
     <div style={{ fontFamily: "'Share Tech Mono', 'Courier New', monospace", background: "#050d14", color: "#7aacbf", minHeight: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <style>{CSS}</style>
 
+      {/* ─── QUIZ MODAL ─── */}
+      {quizOpen && (
+        <QuizModal
+          key={quizOpen.actionKey + "-" + Date.now()}
+          actionKey={quizOpen.actionKey}
+          team={quizOpen.team}
+          onPass={quizOpen.callback}
+          onCancel={() => setQuizOpen(null)}
+        />
+      )}
+
+      {/* ─── DEBRIEF PANEL ─── */}
+      {debriefData && (
+        <DebriefPanel
+          attackMethod={debriefData.attackMethod}
+          defenseAction={debriefData.defenseAction}
+          resolution={debriefData.resolution}
+          attackTarget={debriefData.attackTarget}
+          defenseTarget={debriefData.defenseTarget}
+          onDismiss={handleDebriefDismiss}
+        />
+      )}
+
+      {/* ─── HEADER ─── */}
       <div style={{ background: "#030a10", borderBottom: "1px solid #0c2e45", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <span style={{ fontFamily: "'Orbitron', monospace", fontSize: "15px", fontWeight: 900, color: "#00d4ff", letterSpacing: "4px" }}>CYBER WARZONE</span>
-          <span style={{ fontSize: "11px", color: "#ff5252", letterSpacing: "1px" }}>◈ RED</span>
+          <span style={{ fontSize: "11px", color: "#ff5252", letterSpacing: "1px" }}>{"\u25C8"} RED</span>
           <span style={{ fontSize: "11px", color: "#444" }}>vs</span>
-          <span style={{ fontSize: "11px", color: "#00e676", letterSpacing: "1px" }}>◈ BLUE</span>
+          <span style={{ fontSize: "11px", color: "#00e676", letterSpacing: "1px" }}>{"\u25C8"} BLUE</span>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "20px", fontSize: "11px" }}>
@@ -346,11 +801,13 @@ export default function CyberWarGame() {
           <span style={{ color: "#ff5252" }}>ATK <span style={{ color: "#ff1744", fontSize: "14px", fontWeight: "bold" }}>{score.atk}</span></span>
           <span style={{ color: "#00e676" }}>DEF <span style={{ fontSize: "14px", fontWeight: "bold" }}>{score.def}</span></span>
           <span style={{ color: step === "attack" ? "#ffb300" : "#69f0ae", letterSpacing: "1px" }}>{currentStepLabel}</span>
-          {result && <span className="win-banner" style={{ color: result === "attacker" ? "#ff1744" : "#00e676", fontFamily: "'Orbitron', monospace", fontSize: "12px", padding: "4px 10px", border: "1px solid currentColor", borderRadius: "2px" }}>{result === "attacker" ? "⚠ BREACH" : "✓ SECURED"}</span>}
+          {result && <span className="win-banner" style={{ color: result === "attacker" ? "#ff1744" : "#00e676", fontFamily: "'Orbitron', monospace", fontSize: "12px", padding: "4px 10px", border: "1px solid currentColor", borderRadius: "2px" }}>{result === "attacker" ? "\u26A0 BREACH" : "\u2713 SECURED"}</span>}
         </div>
       </div>
 
+      {/* ─── MAIN BODY ─── */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden", minHeight: 0 }}>
+        {/* ─── TOPOLOGY MAP ─── */}
         <div style={{ flex: "0 0 auto", width: "620px", position: "relative", borderRight: "1px solid #0c2e45", background: "radial-gradient(ellipse at 50% 50%, #091a28 0%, #050d14 75%)", overflow: "hidden" }}>
           <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
             <defs>
@@ -412,7 +869,9 @@ export default function CyberWarGame() {
           </svg>
         </div>
 
+        {/* ─── RIGHT PANEL ─── */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: "340px" }}>
+          {/* ─── ATTACK / DEFENSE CONTROLS ─── */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", padding: "12px", borderBottom: "1px solid #0c2e45", background: "#04111a" }}>
             <div style={{ border: "1px solid #3a151f", padding: "10px", borderRadius: "4px", background: "#070d12" }}>
               <div style={{ fontSize: "10px", color: "#ff5252", marginBottom: "8px", letterSpacing: "2px" }}>RED TEAM — ATTACK PANEL</div>
@@ -424,7 +883,7 @@ export default function CyberWarGame() {
                 {validTargetsForMethod.map((id) => <option key={id} value={id}>{nodeMap[id]?.label}</option>)}
               </select>
               <div style={{ fontSize: "9px", color: "#ffb3c0", minHeight: "30px", marginBottom: "8px" }}>{ATTACK_COPY[attackMethod]}</div>
-              <button onClick={previewAttack} disabled={step !== "attack" || !attackTarget || !!result} style={{ width: "100%", padding: "10px", background: step === "attack" && !result ? "#1a0b10" : "#07111a", color: step === "attack" && !result ? "#ff7070" : "#466173", border: "1px solid #7a2737", borderRadius: "3px", cursor: step === "attack" && !result ? "pointer" : "not-allowed" }}>LOCK ATTACK</button>
+              <button onClick={handleLockAttack} disabled={step !== "attack" || !attackTarget || !!result} style={{ width: "100%", padding: "10px", background: step === "attack" && !result ? "#1a0b10" : "#07111a", color: step === "attack" && !result ? "#ff7070" : "#466173", border: "1px solid #7a2737", borderRadius: "3px", cursor: step === "attack" && !result ? "pointer" : "not-allowed" }}>LOCK ATTACK</button>
             </div>
 
             <div style={{ border: "1px solid #163424", padding: "10px", borderRadius: "4px", background: "#070d12" }}>
@@ -437,22 +896,24 @@ export default function CyberWarGame() {
                 {nodes.map((node) => <option key={node.id} value={node.id}>{node.label}</option>)}
               </select>
               <div style={{ fontSize: "9px", color: "#9fffc9", minHeight: "30px", marginBottom: "8px" }}>{DEFENSE_COPY[defenseAction]}</div>
-              <button onClick={resolveTurn} disabled={step !== "defense" || !selectedAttack || !defenseTarget || !!result} style={{ width: "100%", padding: "10px", background: step === "defense" && !result ? "#091b12" : "#07111a", color: step === "defense" && !result ? "#6dffb0" : "#466173", border: "1px solid #1f7549", borderRadius: "3px", cursor: step === "defense" && !result ? "pointer" : "not-allowed" }}>RESOLVE TURN</button>
+              <button onClick={handleResolveTurn} disabled={step !== "defense" || !selectedAttack || !defenseTarget || !!result} style={{ width: "100%", padding: "10px", background: step === "defense" && !result ? "#091b12" : "#07111a", color: step === "defense" && !result ? "#6dffb0" : "#466173", border: "1px solid #1f7549", borderRadius: "3px", cursor: step === "defense" && !result ? "pointer" : "not-allowed" }}>RESOLVE TURN</button>
             </div>
           </div>
 
+          {/* ─── LOGS ─── */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0", flex: 1, minHeight: 0 }}>
             <div ref={atkRef} style={{ overflowY: "auto", padding: "12px", borderRight: "1px solid #0c2e45" }}>
-              <div style={{ fontSize: "10px", color: "#ff1744", marginBottom: "8px", letterSpacing: "2px" }}>◈ RED TEAM — ATTACK LOG</div>
-              {atkLog.length === 0 ? <div style={{ fontSize: "10px", color: "#0d2e40" }}><span style={{ animation: "blink 1.2s infinite" }}>_</span> Awaiting signal...</div> : atkLog.map((e) => <div key={e.id} className="log-line" style={{ fontSize: "11px", lineHeight: "1.55", color: e.msg.startsWith("━") ? "#ff174440" : e.msg.startsWith("✓") ? "#ff5252" : e.msg.startsWith("⚠") ? "#ffb300" : "#ff7070", borderLeft: `2px solid ${e.msg.startsWith("━") ? "#1a1520" : "#ff174430"}`, padding: "1px 6px", marginBottom: "1px", whiteSpace: "pre-wrap" }}>{e.msg}</div>)}
+              <div style={{ fontSize: "10px", color: "#ff1744", marginBottom: "8px", letterSpacing: "2px" }}>{"\u25C8"} RED TEAM — ATTACK LOG</div>
+              {atkLog.length === 0 ? <div style={{ fontSize: "10px", color: "#0d2e40" }}><span style={{ animation: "blink 1.2s infinite" }}>_</span> Awaiting signal...</div> : atkLog.map((e) => <div key={e.id} className="log-line" style={{ fontSize: "11px", lineHeight: "1.55", color: e.msg.startsWith("\u2501") ? "#ff174440" : e.msg.startsWith("COMPROMISED") ? "#ff5252" : e.msg.startsWith("DEGRADED") ? "#ffb300" : "#ff7070", borderLeft: `2px solid ${e.msg.startsWith("\u2501") ? "#1a1520" : "#ff174430"}`, padding: "1px 6px", marginBottom: "1px", whiteSpace: "pre-wrap" }}>{e.msg}</div>)}
             </div>
 
             <div ref={defRef} style={{ overflowY: "auto", padding: "12px" }}>
-              <div style={{ fontSize: "10px", color: "#00e676", marginBottom: "8px", letterSpacing: "2px" }}>◈ BLUE TEAM — DEFENSE LOG</div>
-              {defLog.length === 0 ? <div style={{ fontSize: "10px", color: "#0d2e40" }}><span style={{ animation: "blink 1.2s infinite" }}>_</span> Awaiting signal...</div> : defLog.map((e) => <div key={e.id} className="log-line" style={{ fontSize: "11px", lineHeight: "1.55", color: e.msg.startsWith("━") ? "#00e67640" : e.msg.startsWith("✓") ? "#00e676" : "#69f0ae", borderLeft: `2px solid ${e.msg.startsWith("━") ? "#0a2a1a" : "#00e67630"}`, padding: "1px 6px", marginBottom: "1px", whiteSpace: "pre-wrap" }}>{e.msg}</div>)}
+              <div style={{ fontSize: "10px", color: "#00e676", marginBottom: "8px", letterSpacing: "2px" }}>{"\u25C8"} BLUE TEAM — DEFENSE LOG</div>
+              {defLog.length === 0 ? <div style={{ fontSize: "10px", color: "#0d2e40" }}><span style={{ animation: "blink 1.2s infinite" }}>_</span> Awaiting signal...</div> : defLog.map((e) => <div key={e.id} className="log-line" style={{ fontSize: "11px", lineHeight: "1.55", color: e.msg.startsWith("\u2501") ? "#00e67640" : e.msg.startsWith("BLOCKED") || e.msg.startsWith("DETECTED") || e.msg.startsWith("RESTORED") || e.msg.startsWith("HARDENED") ? "#00e676" : "#69f0ae", borderLeft: `2px solid ${e.msg.startsWith("\u2501") ? "#0a2a1a" : "#00e67630"}`, padding: "1px 6px", marginBottom: "1px", whiteSpace: "pre-wrap" }}>{e.msg}</div>)}
             </div>
           </div>
 
+          {/* ─── FOOTER STATS ─── */}
           <div style={{ flexShrink: 0, padding: "14px", background: "#030a10", borderTop: "1px solid #0c2e45" }}>
             <div style={{ marginBottom: "12px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "9px", letterSpacing: "1px", marginBottom: "5px" }}>
@@ -474,11 +935,11 @@ export default function CyberWarGame() {
             </div>
 
             <div style={{ display: "flex", gap: "6px" }}>
-              <button onClick={reset} style={{ flex: 1, padding: "10px", background: "#07111a", border: "1px solid #0c2e45", color: "#2a5a70", fontFamily: "'Share Tech Mono', monospace", fontSize: "10px", letterSpacing: "1px", cursor: "pointer", borderRadius: "2px" }}>↺ RESET GAME</button>
+              <button onClick={reset} style={{ flex: 1, padding: "10px", background: "#07111a", border: "1px solid #0c2e45", color: "#2a5a70", fontFamily: "'Share Tech Mono', monospace", fontSize: "10px", letterSpacing: "1px", cursor: "pointer", borderRadius: "2px" }}>{"\u21BA"} RESET GAME</button>
             </div>
 
             <div style={{ marginTop: "8px", fontSize: "9px", color: "#0d3a52", textAlign: "center", letterSpacing: "2px" }}>
-              {result ? <span style={{ color: result === "attacker" ? "#ff1744" : "#00e676" }}>SIM COMPLETE · {result === "attacker" ? "BREACH CONFIRMED" : "NETWORK HELD"}</span> : <span>{step === "attack" ? "RED TEAM: CHOOSE ROUTE OF ATTACK" : "BLUE TEAM: CHOOSE ROUTE OF DEFENSE"}</span>}
+              {result ? <span style={{ color: result === "attacker" ? "#ff1744" : "#00e676" }}>SIM COMPLETE {"\u00B7"} {result === "attacker" ? "BREACH CONFIRMED" : "NETWORK HELD"}</span> : <span>{step === "attack" ? "RED TEAM: CHOOSE ROUTE OF ATTACK" : "BLUE TEAM: CHOOSE ROUTE OF DEFENSE"}</span>}
             </div>
           </div>
         </div>
